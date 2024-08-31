@@ -1,24 +1,22 @@
-package com.kooz.giggy.domain;
+package com.kooz.giggy.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class Post {
+public class ProfileImage extends BaseEntity {
     @Id
-    @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profile_image_id")
     private Long id;
+
     @Column(nullable = false)
-    private String title;
-    private String content;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User owner;
+    private String imagePath;
+
+
 }
+
