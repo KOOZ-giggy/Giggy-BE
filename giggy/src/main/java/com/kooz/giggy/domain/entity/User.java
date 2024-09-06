@@ -8,32 +8,46 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
+@Table(name = "users")
 public class User extends BaseEntity {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
-    @Column(nullable = false)
-    private Integer age;
-    @Column(nullable = false)
-    private String email;
+
+    @Column(nullable = false, unique = true)
+    private String contact;
 
     @Column(nullable = false)
-    private String contact;
+    private LocalDate dob;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private String postCode;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private BizType bizType;
 
     @OneToMany
     private List<Post> posts;
+
+    @Enumerated(EnumType.STRING)
+    private UserPermission permission;
 
     @Column
     private String profileImageUrl;
