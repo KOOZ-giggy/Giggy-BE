@@ -1,4 +1,4 @@
-package com.kooz.giggy.domain.entity;
+package com.kooz.giggy.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,6 +15,7 @@ public class BaseEntity {
     @CreatedDate
     @Column(updatable = false, name = "created_at")
     private LocalDateTime createdAt;
+
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

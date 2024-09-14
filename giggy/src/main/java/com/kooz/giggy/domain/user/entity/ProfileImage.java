@@ -1,5 +1,6 @@
-package com.kooz.giggy.domain.entity;
+package com.kooz.giggy.domain.user.entity;
 
+import com.kooz.giggy.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,7 +17,5 @@ public class ProfileImage extends BaseEntity {
 
     @Column(nullable = false)
     private String imagePath;
-
-
 }
 

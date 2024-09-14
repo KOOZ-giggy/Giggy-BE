@@ -1,10 +1,10 @@
-package com.kooz.giggy.domain.entity;
+package com.kooz.giggy.domain.user.entity;
 
+import com.kooz.giggy.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,9 +38,6 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private BizType bizType;
 
-    @OneToMany
-    private List<Post> posts;
-
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.EMPLOYEE;
 
@@ -49,6 +46,7 @@ public class User extends BaseEntity {
 
     // OAuth2 Service provider
     private String provider;
+
     // Unique ID who Logged in with OAuth2
     private String providerId;
 
