@@ -1,15 +1,9 @@
 package com.kooz.giggy.domain.entity;
 
-import com.kooz.giggy.domain.entity.BizType;
-import com.kooz.giggy.domain.entity.Post;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -17,24 +11,25 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+@ToString
 public class User extends BaseEntity {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column
     private String contact;
 
     @Column(nullable = false)
     private LocalDate dob;
 
-    @Column(nullable = false)
+    @Column
     private String address;
 
-    @Column(nullable = false)
+    @Column
     private String postCode;
 
     @Column(nullable = false, unique = true)
@@ -47,7 +42,7 @@ public class User extends BaseEntity {
     private List<Post> posts;
 
     @Enumerated(EnumType.STRING)
-    private UserPermission permission;
+    private UserRole role = UserRole.EMPLOYEE;
 
     @Column
     private String profileImageUrl;
@@ -56,4 +51,16 @@ public class User extends BaseEntity {
     private String provider;
     // Unique ID who Logged in with OAuth2
     private String providerId;
+
+    @Builder
+    public User(String name, String contact, LocalDate dob, String address, String postCode, String profileImageUrl, String provider, String providerId) {
+        this.name = name;
+        this.contact = contact;
+        this.dob = dob;
+        this.address = address;
+        this.postCode = postCode;
+        this.profileImageUrl = profileImageUrl;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
 }
