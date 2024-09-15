@@ -2,16 +2,17 @@ package com.kooz.giggy.infrastructure.oauth.client;
 
 import com.kooz.giggy.infrastructure.oauth.dto.GoogleOAuthRequest;
 import com.kooz.giggy.infrastructure.oauth.dto.GoogleOAuthResponse;
-import com.kooz.giggy.infrastructure.oauth.dto.GoogleUserInfoRequest;
-import com.kooz.giggy.infrastructure.oauth.dto.GoogleUserInfoResponse;
+import com.kooz.giggy.infrastructure.oauth.dto.GoogleUserProfileRequest;
+import com.kooz.giggy.infrastructure.oauth.dto.GoogleUserProfileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -31,33 +32,58 @@ public class GoogleOAuthClient {
 
     // AuthCode 2 Google Token
     public GoogleOAuthResponse getTokens(GoogleOAuthRequest request) {
-        String endpoint = "https://oauth2.googleapis.com/token";
-        String requestUrl = UriComponentsBuilder.fromHttpUrl(endpoint)
-                .queryParam("code", request.getCode())
-                .queryParam("client_id", clientId)
-                .queryParam("client_secret", clientSecret)
-                .queryParam("redirect_uri", redirectUri)
-                .queryParam("grant_type", "authorization_code")
-                .toUriString();
+        String baseUrl = "https://oauth2.googleapis.com";
+        WebClient webClient = WebClient
+                .builder()
+                .baseUrl(baseUrl)
+                .build();
 
-        log.info("🟢 requestURL: " + requestUrl);
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("code", request.getCode());
+        requestBody.put("client_id", clientId);
+        requestBody.put("client_secret", clientSecret);
+        requestBody.put("redirect_uri", redirectUri);
+        requestBody.put("grant_type", "authorization_code");
 
-        ResponseEntity<GoogleOAuthResponse> response = restTemplate.exchange(
-                requestUrl, HttpMethod.POST, null, GoogleOAuthResponse.class);
-        log.info("🟢 response.body:" + response.toString());
-        return response.getBody();
+        GoogleOAuthResponse response = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("code", request.getCode())
+                        .path("/token")
+                        .build()
+                )
+                .header(HttpHeaders.ACCEPT, "application/json")
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(GoogleOAuthResponse.class)
+                .block();
+
+        assert response != null;
+        log.info("\n🟢response.body: {}", response.toString());
+
+        getUserProfile(new GoogleUserProfileRequest(response.accessToken()));
+
+        return response;
     }
 
-    public GoogleUserInfoResponse getUserInfo(GoogleUserInfoRequest request) {
-        String endpoint = "https://www.googelapis.com/userinfo/v2/me";
-        String requestUrl = UriComponentsBuilder.fromHttpUrl(endpoint)
-                .queryParam("access_token", request.getAccessToken())
-                .toUriString();
+    public GoogleUserProfileResponse getUserProfile(GoogleUserProfileRequest request) {
+        log.info("\n🟢Request: {}", request);
+        String baseUrl = "https://www.googleapis.com";
+        WebClient webClient = WebClient
+                .builder()
+                .baseUrl(baseUrl)
+                .build();
 
-        ResponseEntity<GoogleUserInfoResponse> response = restTemplate.exchange(
-                requestUrl, HttpMethod.GET, null, GoogleUserInfoResponse.class
-        );
+        GoogleUserProfileResponse response = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/userinfo/v2/me")
+                        .queryParam("access_token", request.getAccessToken())
+                        .build())
+                .retrieve()
+                .bodyToMono(GoogleUserProfileResponse.class)
+                .block();
 
-        return response.getBody();
+        log.info("\n🟢Response: {}", response);
+
+        return response;
     }
 }
