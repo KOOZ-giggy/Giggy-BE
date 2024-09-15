@@ -52,7 +52,7 @@ public class User extends BaseEntity {
     private String providerId;
 
     @Builder
-    public User(String name, String contact, LocalDate dob, String address, String postCode, String profileImageUrl, String provider, String providerId) {
+    public User(String name, String contact, LocalDate dob, String address, String postCode, String profileImageUrl, OAuthProviderType provider, String providerId) {
         this.name = name;
         this.contact = contact;
         this.dob = dob;
