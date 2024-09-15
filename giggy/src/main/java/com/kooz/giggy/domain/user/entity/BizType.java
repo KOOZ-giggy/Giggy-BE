@@ -1,4 +1,4 @@
-package com.kooz.giggy.domain.entity;
+package com.kooz.giggy.domain.user.entity;
 
 public enum BizType {
     OFFICE_SUPPORT, //사무 지원
