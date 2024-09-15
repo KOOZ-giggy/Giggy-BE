@@ -44,8 +44,9 @@ public class User extends BaseEntity {
     @Column
     private String profileImageUrl;
 
+    @Enumerated(value = EnumType.STRING)
     // OAuth2 Service provider
-    private String provider;
+    private OAuthProviderType provider;
 
     // Unique ID who Logged in with OAuth2
     private String providerId;
