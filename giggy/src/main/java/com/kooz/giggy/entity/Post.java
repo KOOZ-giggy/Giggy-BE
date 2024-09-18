@@ -1,7 +1,6 @@
-package com.kooz.giggy.domain.post.entity;
+package com.kooz.giggy.entity;
 
-import com.kooz.giggy.domain.BaseEntity;
-import com.kooz.giggy.domain.user.entity.User;
+import com.kooz.giggy.entity.user.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,5 +25,5 @@ public class Post extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Member user;
 }

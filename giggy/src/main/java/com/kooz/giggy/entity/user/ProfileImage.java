@@ -1,6 +1,6 @@
-package com.kooz.giggy.domain.user.entity;
+package com.kooz.giggy.entity.user;
 
-import com.kooz.giggy.domain.BaseEntity;
+import com.kooz.giggy.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

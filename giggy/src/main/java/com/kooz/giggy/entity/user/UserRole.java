@@ -1,4 +1,4 @@
-package com.kooz.giggy.domain.user.entity;
+package com.kooz.giggy.entity.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
