@@ -1,4 +1,4 @@
-package com.kooz.giggy.infrastructure.oauth.dto;
+package com.kooz.giggy.dto.oauth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
