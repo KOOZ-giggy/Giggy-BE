@@ -1,8 +1,10 @@
 package com.kooz.giggy.domain.user.entity;
 
 import com.kooz.giggy.domain.BaseEntity;
+import com.kooz.giggy.domain.user.dto.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -19,6 +21,9 @@ public class User extends BaseEntity {
     private Long id;
     @Column
     private String name;
+
+    @Column
+    private String password;
 
     @Column
     private String contact;
@@ -52,8 +57,9 @@ public class User extends BaseEntity {
     private String providerId;
 
     @Builder
-    public User(String name, String contact, LocalDate dob, String address, String postCode, String profileImageUrl, OAuthProviderType provider, String providerId) {
+    public User(String name, String password, String contact, LocalDate dob, String address, String postCode, String profileImageUrl, OAuthProviderType provider, String providerId) {
         this.name = name;
+        this.password = password;
         this.contact = contact;
         this.dob = dob;
         this.address = address;
@@ -61,5 +67,13 @@ public class User extends BaseEntity {
         this.profileImageUrl = profileImageUrl;
         this.provider = provider;
         this.providerId = providerId;
+    }
+
+    public void update(UserUpdateRequest request, PasswordEncoder encoder) {
+        this.password = request.getPassword() == null || request.getPassword().isBlank() ? this.password : encoder.encode(request.getPassword());
+        this.contact = request.getContact();
+        this.address = request.getAddress();
+        this.postCode = request.getPostCode();
+        this.bizType = request.getBizType();
     }
 }
