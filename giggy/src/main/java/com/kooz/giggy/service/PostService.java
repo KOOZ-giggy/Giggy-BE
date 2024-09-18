@@ -1,6 +1,6 @@
-package com.kooz.giggy.domain.post.service;
+package com.kooz.giggy.service;
 
-import com.kooz.giggy.domain.post.repository.PostRepository;
+import com.kooz.giggy.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

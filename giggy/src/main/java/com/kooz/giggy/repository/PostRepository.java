@@ -1,6 +1,6 @@
-package com.kooz.giggy.domain.post.repository;
+package com.kooz.giggy.repository;
 
-import com.kooz.giggy.domain.post.entity.Post;
+import com.kooz.giggy.entity.Post;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
