@@ -1,4 +1,4 @@
-package com.kooz.giggy.infrastructure.oauth.dto;
+package com.kooz.giggy.dto.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

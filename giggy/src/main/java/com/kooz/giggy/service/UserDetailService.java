@@ -1,18 +1,14 @@
-package com.kooz.giggy.util;
+package com.kooz.giggy.service;
 
-import com.kooz.giggy.domain.user.repository.UserRepository;
+import com.kooz.giggy.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
-    private final UserRepository userRepository;
-
-    laoduser
+    private final MemberRepository memberRepository;
 
 
     @Override
