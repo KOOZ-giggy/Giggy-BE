@@ -1,4 +1,4 @@
-package com.kooz.giggy.domain.user.controller;
+package com.kooz.giggy.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

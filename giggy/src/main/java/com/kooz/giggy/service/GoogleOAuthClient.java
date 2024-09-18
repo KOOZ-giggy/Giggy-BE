@@ -1,9 +1,9 @@
-package com.kooz.giggy.infrastructure.oauth.client;
+package com.kooz.giggy.service;
 
-import com.kooz.giggy.infrastructure.oauth.dto.GoogleOAuthRequest;
-import com.kooz.giggy.infrastructure.oauth.dto.GoogleOAuthResponse;
-import com.kooz.giggy.infrastructure.oauth.dto.GoogleUserProfileRequest;
-import com.kooz.giggy.infrastructure.oauth.dto.GoogleUserProfileResponse;
+import com.kooz.giggy.dto.oauth.GoogleOAuthRequest;
+import com.kooz.giggy.dto.oauth.GoogleOAuthResponse;
+import com.kooz.giggy.dto.oauth.GoogleUserProfileRequest;
+import com.kooz.giggy.dto.oauth.GoogleUserProfileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

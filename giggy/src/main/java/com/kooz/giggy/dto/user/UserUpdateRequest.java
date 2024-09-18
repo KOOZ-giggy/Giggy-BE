@@ -1,6 +1,6 @@
-package com.kooz.giggy.domain.user.dto;
+package com.kooz.giggy.dto.user;
 
-import com.kooz.giggy.domain.user.entity.BizType;
+import com.kooz.giggy.entity.user.BizType;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
