@@ -34,15 +34,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         // TODO: - userId를 가져와서 token 생성 요청 필요.
-        // https://blogan99.tistory.com/89
         Object principal = authResult.getPrincipal();
-
-//        String token = jwtUtil.generateToken();
 
         super.successfulAuthentication(request, response, chain, authResult);
     }
 
-    // 로그인 실패시
+    // 인증 실패시
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         response.setStatus(401);

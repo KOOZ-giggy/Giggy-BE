@@ -28,8 +28,6 @@ public class GoogleOAuthClient {
     @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
     private String redirectUri;
 
-    private final RestTemplate restTemplate;
-
     // AuthCode 2 Google Token
     public GoogleOAuthResponse getTokens(GoogleOAuthRequest request) {
         String baseUrl = "https://oauth2.googleapis.com";
