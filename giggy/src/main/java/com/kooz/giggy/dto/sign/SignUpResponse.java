@@ -17,7 +17,7 @@ public class SignUpResponse {
     private BizType bizType;
 
     public static SignUpResponse from(Member member) {
-        SignUpResponse signUpResponse = new SignUpResponse(
+        return new SignUpResponse(
                 member.getName(),
                 member.getContact(),
                 member.getAddress(),
@@ -25,7 +25,5 @@ public class SignUpResponse {
                 member.getEmail(),
                 member.getBizType()
         );
-
-        return signUpResponse;
     }
 }

@@ -1,5 +1,7 @@
 package com.kooz.giggy.service;
 
+import com.kooz.giggy.dto.sign.CustomUserDetails;
+import com.kooz.giggy.entity.user.Member;
 import com.kooz.giggy.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +19,9 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return memberRepository.findByProviderId(username);
-//        return memberRepository.findByProviderId(username)
-//                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        Member member = memberRepository.findByProviderId(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+
+        return new CustomUserDetails(member);
     }
 }
