@@ -2,10 +2,13 @@ package com.kooz.giggy.util;
 
 import com.kooz.giggy.entity.user.UserRole;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -44,29 +47,28 @@ public class JwtUtil {
     }
 
     public String getUserId(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
-
+        Claims claims = parseClaims(token);
         return claims.get("userId", String.class);
     }
 
     public String getRole(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
-
+        Claims claims = parseClaims(token);
         return claims.get("userRole", String.class);
     }
 
     public Boolean isExpired(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
-
+        Claims claims = parseClaims(token);
         return claims.getExpiration().before(new Date());
+    }
+
+    private Claims parseClaims(String token) {
+        try {
+            return Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch(ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 }
