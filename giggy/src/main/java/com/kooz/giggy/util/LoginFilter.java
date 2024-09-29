@@ -9,9 +9,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -35,8 +39,20 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         // TODO: - userId를 가져와서 token 생성 요청 필요.
         Object principal = authResult.getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String username = userDetails.getUsername();
 
-        super.successfulAuthentication(request, response, chain, authResult);
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
+        GrantedAuthority auth = iterator.next();
+        String role = auth.getAuthority();
+
+        String token = jwtUtil.generateToken(username, role);
+
+        // JWT를 Response의 header에 담아서 응답.
+        // key: "Authorization"
+        // value: "Bearer " + token
+        response.addHeader("Authorization", "Bearer " + token);
     }
 
     // 인증 실패시

@@ -1,5 +1,6 @@
 package com.kooz.giggy.config;
 
+import com.kooz.giggy.service.MemberService;
 import com.kooz.giggy.util.JWTFilter;
 import com.kooz.giggy.util.JwtUtil;
 import com.kooz.giggy.util.LoginFilter;
@@ -22,6 +23,7 @@ public class SecurityConfig {
 
     private final AuthenticationConfiguration configuration;
     private final JwtUtil jwtUtil;
+    private final MemberService memberService;
 
     private final String[] allowsUrls = {"/", "/swagger-ui/**", "/api/v1/auth", "/api/v1/sign-in", "/api/v1/sign-up"};
 
@@ -42,7 +44,7 @@ public class SecurityConfig {
                 )
                 // 기존 UsernamePWAuthentcationFilter를 로그인 필터로 대체
                 .addFilterAt(new LoginFilter(configuration.getAuthenticationManager(), jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtil, memberService), LoginFilter.class);
 
 //                .oauth2Login(oauth2 -> oauth2
 //                                .successHandler(oauth2SuccessHandler)

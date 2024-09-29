@@ -10,19 +10,6 @@ import org.springframework.stereotype.Service;
 
 // TODO: 9/25/24 UserDetailService는 토큰의 인증 정보를 조회할 떄 사용.
 
-//@Service
-//@RequiredArgsConstructor
-//public class UserDetailService implements UserDetailsService {
-//    private final MemberRepository memberRepository;
-
-
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = userRepository.findby
-//    }
-//}
-
-
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailService implements UserDetailsService {

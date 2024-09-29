@@ -32,11 +32,11 @@ public class JwtUtil {
         this.issuer = issuer;
     }
 
-    public String generateToken(String userId, UserRole role) {
+    public String generateToken(String userId, String role) {
         Claims claims = Jwts.claims();
 
         claims.put("userId", userId);
-        claims.put("userRole", role.getValue());
+        claims.put("userRole", role);
 
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS256, secretKey)
