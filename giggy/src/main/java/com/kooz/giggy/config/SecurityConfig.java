@@ -37,7 +37,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )   // 세션 없이 jwt 기반으로 진행
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(allowsUrls).permitAll() // allowsUrls의 경우 permit
+                                .requestMatchers("/api/v1/auth/*").permitAll()
+//                        .requestMatchers(allowsUrls).permitAll() // allowsUrls의 경우 permit
                         .anyRequest().authenticated() // 그 외엔 모두 인증 필요
                 )
                 .sessionManagement(sessionManagement -> sessionManagement

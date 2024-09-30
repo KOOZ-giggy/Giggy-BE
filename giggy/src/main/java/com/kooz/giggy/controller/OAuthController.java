@@ -30,32 +30,26 @@ public class OAuthController {
     // handling AuthCode received by client
     @PostMapping("/google")
     public JwtResponse googleAuthLogin(@RequestBody GoogleOAuthRequest request) {
-        GoogleOAuthResponse response = googleOAuthClient.getTokens(new GoogleOAuthRequest(request.getCode()));
+        GoogleOAuthResponse response = googleOAuthClient.getTokens(new GoogleOAuthRequest(request.getCode(), request.getEmail()));
+
         // TODO: 9/15/24 GoogleOAuthClient의 getUserInfo 통해서 id 받아온 이후 DB 저장 & jwt token 발급
         GoogleUserProfileResponse userProfile = googleOAuthClient.getUserProfile(new GoogleUserProfileRequest(response.accessToken()));
 
         String providerId = userProfile.getId();
-        Optional<Member> loginMember = memberService.findByGoogleProviderId(providerId);
-
-        // TODO: 9/15/24 받아온 UserID를 DB에 저장 이후, jwt token 발급
-//        if (memberService.findByGoogleProviderId(providerId).isEmpty()) {
-//            // 미가입 계정의 경우
-//            memberService.saveUser(OAuthProviderType.GOOGLE, providerId);
-//            String token = jwtUtil.generateToken(providerId, UserRole.EMPLOYEE.getValue());
-//
-//        } else {
-//            // 기가입 계정의 경우
-////            String token = jwtTokenProvider
-//        }
+        String email = userProfile.getEmail();;
+        Optional<Member> loginMember = memberService.findByEmail(email);
 
         if (loginMember.isPresent()) {
-            String token = jwtUtil.generateToken(providerId, UserRole.EMPLOYEE.getValue());
-            return new JwtResponse("Bearer", token);
+            String accessToken = jwtUtil.generateAccessToken(providerId, UserRole.EMPLOYEE.getValue());
+            String refreshToken = jwtUtil.generateRefreshToken(providerId);
+            return new JwtResponse("Bearer", accessToken, refreshToken);
         } else {
             // 처음 로그인한 경우
-            memberService.saveUser(OAuthProviderType.GOOGLE, providerId);
-            String token = jwtUtil.generateToken(providerId, UserRole.EMPLOYEE.getValue());
-            return new JwtResponse("Bearer", token);
+            memberService.saveUser(OAuthProviderType.GOOGLE, providerId, email);
+             
+            String accessToken = jwtUtil.generateAccessToken(providerId, UserRole.EMPLOYEE.getValue());
+            String refreshToken = jwtUtil.generateRefreshToken(providerId);
+            return new JwtResponse("Bearer", accessToken, refreshToken);
         }
     }
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class GoogleUserProfileResponse {
     private String id;
+    private String email;
 //    private String email;
 //    @JsonProperty(value = "verified_email")
 //    private boolean verifiedEmail;

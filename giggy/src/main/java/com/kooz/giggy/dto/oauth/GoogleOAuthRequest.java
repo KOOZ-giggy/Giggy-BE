@@ -12,12 +12,14 @@ import lombok.RequiredArgsConstructor;
 public class GoogleOAuthRequest {
 
     private String code;
+    private String email;
 
-//    public GoogleOAuthRequest(String code) {
-//        this.code = code;
-//    }
     @JsonCreator
-    public GoogleOAuthRequest(@JsonProperty("code") String code) {
+    public GoogleOAuthRequest(
+            @JsonProperty("code") String code,
+            @JsonProperty("email") String email
+    ) {
         this.code = code;
+        this.email = email;
     }
 }

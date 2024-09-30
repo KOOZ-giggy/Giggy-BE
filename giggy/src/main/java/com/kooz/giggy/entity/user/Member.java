@@ -29,13 +29,13 @@ public class Member extends BaseEntity {
     @Column
     private String contact;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate dob;
 
-    @Column
+    @Column(nullable = true)
     private String address;
 
-    @Column
+    @Column(nullable = true)
     private String postCode;
 
     @Column(nullable = false, unique = true)

@@ -47,7 +47,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String token = jwtUtil.generateToken(username, role);
+        String token = jwtUtil.generateAccessToken(username, role);
 
         // JWT를 Response의 header에 담아서 응답.
         // key: "Authorization"

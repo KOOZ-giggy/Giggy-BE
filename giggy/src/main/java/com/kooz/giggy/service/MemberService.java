@@ -8,7 +8,6 @@ import com.kooz.giggy.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +17,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private MemberRepository memberRepository;
-//    private final PasswordEncoder encoder;
+    private final MemberRepository memberRepository;
 
     public Optional<Member> findByGoogleProviderId(String providerId) {
         return memberRepository.findByProviderId(providerId);
     }
 
-    public Member saveUser(OAuthProviderType provider, String providerId) {
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+    public Member saveUser(OAuthProviderType provider, String providerId, String email) {
         Member user = Member.builder()
                 .provider(provider)
                 .providerId(providerId)
+                .email(email)
                 .build();
 
         return memberRepository.save(user);

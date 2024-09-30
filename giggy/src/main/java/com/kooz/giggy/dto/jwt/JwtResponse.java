@@ -10,6 +10,6 @@ import lombok.Data;
 // Client에게 전달할 TokenResponse
 public class JwtResponse {
     private String grantType;
-    private String token;
-//    private String refreshToken;
+    private String accessToken;
+    private String refreshToken;
 }
