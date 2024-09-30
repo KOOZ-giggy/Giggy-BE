@@ -32,6 +32,7 @@ public class SecurityConfig {
         http //.securityMatcher("/**")
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )   // 세션 없이 jwt 기반으로 진행

@@ -53,7 +53,8 @@ public class JWTFilter extends OncePerRequestFilter {
 
         // loginMember 정보로 UsernamePasswordAuthentcationToken 발급
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginMember.getProviderId(), null, List.of(new SimpleGrantedAuthority(loginMember.getRole().getValue())));
-        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+//        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);
