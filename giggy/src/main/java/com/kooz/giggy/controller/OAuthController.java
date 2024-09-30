@@ -24,8 +24,10 @@ import java.util.Optional;
 public class OAuthController {
 
     private final GoogleOAuthClient googleOAuthClient;
-    private final JwtUtil jwtUtil;
     private final MemberService memberService;
+
+    @Autowired
+    private final JwtUtil jwtUtil;
 
     // handling AuthCode received by client
     @PostMapping("/google")

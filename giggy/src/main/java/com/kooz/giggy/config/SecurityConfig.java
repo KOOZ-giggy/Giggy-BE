@@ -5,6 +5,7 @@ import com.kooz.giggy.util.JWTFilter;
 import com.kooz.giggy.util.JwtUtil;
 import com.kooz.giggy.util.LoginFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -22,8 +23,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final AuthenticationConfiguration configuration;
-    private final JwtUtil jwtUtil;
     private final MemberService memberService;
+
+    @Autowired
+    private final JwtUtil jwtUtil;
 
     private final String[] allowsUrls = {"/", "/swagger-ui/**", "/api/v1/auth", "/api/v1/sign-in", "/api/v1/sign-up"};
 
