@@ -7,10 +7,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -23,7 +23,9 @@ import java.util.List;
 @Slf4j
 public class JWTFilter extends OncePerRequestFilter {
 
+    @Autowired
     private final JwtUtil jwtUtil;
+
     private final MemberService memberService;
 
     @Override
@@ -52,11 +54,18 @@ public class JWTFilter extends OncePerRequestFilter {
         Member loginMember = memberService.findByGoogleProviderId(userId).get();
 
         // loginMember 정보로 UsernamePasswordAuthentcationToken 발급
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginMember.getProviderId(), null, List.of(new SimpleGrantedAuthority(loginMember.getRole().getValue())));
 
+        //v1
+//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginMember.getProviderId(), null, List.of(new SimpleGrantedAuthority(jwtUtil.getRole(token))));
+//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginMember.getProviderId(), null, jwtUtil.getAuthentication(token).getAuthorities());
 //        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        // v2, 정상 토큰의 경우 해당 토큰에서 Authenticationd을 추출하여 SecurityContext에 저장
+        Authentication authentication = jwtUtil.getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         filterChain.doFilter(request, response);
     }
 }

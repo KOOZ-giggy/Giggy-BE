@@ -13,6 +13,7 @@ import com.kooz.giggy.service.GoogleOAuthClient;
 import com.kooz.giggy.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;

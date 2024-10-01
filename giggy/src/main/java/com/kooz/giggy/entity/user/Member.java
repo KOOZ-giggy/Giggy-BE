@@ -5,6 +5,7 @@ import com.kooz.giggy.entity.BaseEntity;
 import com.kooz.giggy.dto.user.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
