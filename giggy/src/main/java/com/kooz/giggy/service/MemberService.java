@@ -1,5 +1,6 @@
 package com.kooz.giggy.service;
 
+import com.kooz.giggy.dto.sign.MemberResponse;
 import com.kooz.giggy.dto.sign.SignUpRequest;
 import com.kooz.giggy.dto.sign.SignUpResponse;
 import com.kooz.giggy.entity.user.OAuthProviderType;
@@ -38,7 +39,7 @@ public class MemberService {
     }
 
     @Transactional
-    public SignUpResponse registerMember(SignUpRequest request) {
+    public MemberResponse registerMember(SignUpRequest request) {
         Member member = memberRepository.save(Member.from(request, new BCryptPasswordEncoder()));
 
         try {
@@ -46,6 +47,8 @@ public class MemberService {
         } catch (DataIntegrityViolationException e) {
             throw new IllegalArgumentException("이미 사용중인 ID입니다.");
         }
-        return SignUpResponse.from(member);
+
+        return MemberResponse.from(member);
+//        return SignUpResponse.from(member);
     }
 }
