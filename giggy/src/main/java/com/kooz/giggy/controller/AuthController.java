@@ -33,7 +33,7 @@ public class AuthController {
     // handling AuthCode received by client
     @PostMapping("/google")
     public JwtResponse googleAuthLogin(@RequestBody GoogleOAuthRequest request) {
-        GoogleOAuthResponse response = googleOAuthClient.getTokens(new GoogleOAuthRequest(request.getCode(), request.getEmail()));
+        GoogleOAuthResponse response = googleOAuthClient.getTokens(new GoogleOAuthRequest(request.getCode()));
 
         // TODO: 9/15/24 GoogleOAuthClient의 getUserInfo 통해서 id 받아온 이후 DB 저장 & jwt token 발급
         GoogleUserProfileResponse userProfile = googleOAuthClient.getUserProfile(new GoogleUserProfileRequest(response.accessToken()));

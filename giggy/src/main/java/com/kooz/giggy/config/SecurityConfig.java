@@ -16,6 +16,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter;
 
 @Configuration
 @EnableWebSecurity
@@ -40,8 +42,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )   // 세션 없이 jwt 기반으로 진행
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers("/api/v1/auth/*").permitAll()
-//                        .requestMatchers(allowsUrls).permitAll() // allowsUrls의 경우 permit
+                        .requestMatchers("/api/v1/auth/**", "/api/v1/signup").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated() // 그 외엔 모두 인증 필요
                 )
                 .sessionManagement(sessionManagement -> sessionManagement
@@ -60,8 +62,6 @@ public class SecurityConfig {
 
 //                );
 //                .userDetailsService()
-
-
 
 
         return http.build();

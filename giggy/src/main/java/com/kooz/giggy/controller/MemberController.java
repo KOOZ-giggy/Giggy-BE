@@ -46,7 +46,7 @@ public class MemberController {
             // 이미 회원가입이 된 멤버의 경우
             String accessToken = jwtUtil.generateAccessToken(providerId, UserRole.EMPLOYEE.getValue());
             String refreshToken = jwtUtil.generateRefreshToken(providerId);
-            return new JwtResponse("Bearer", accessToken, refreshToken)
+            return new JwtResponse("Bearer", accessToken, refreshToken);
         } else {
             // 첫 회원가입의 경우
             SignUpResponse signUpResponse = memberService.registerMember(request);
