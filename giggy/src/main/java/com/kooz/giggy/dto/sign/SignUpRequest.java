@@ -7,11 +7,13 @@ import lombok.Getter;
 @Getter
 @Builder
 public class SignUpRequest {
-    private String name;
-    private String password;
+    // GOOGLE, APPLE
+    private String providerType;
+    // OAuth Code
+    private String authCode;
+    private String firstName;
+    private String lastname;
+    private String dob;
     private String contact;
-    private String address;
-    private String postCode;
     private String email;
-    private BizType bizType;
 }

@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/auth")
 @Slf4j
 @RequiredArgsConstructor
-public class OAuthController {
+public class AuthController {
 
     private final GoogleOAuthClient googleOAuthClient;
     private final MemberService memberService;

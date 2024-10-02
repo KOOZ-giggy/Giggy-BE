@@ -31,7 +31,7 @@ public class Member extends BaseEntity {
     private String contact;
 
     @Column
-    private LocalDate dob;
+    private String dob;
 
     @Column(nullable = true)
     private String address;
@@ -58,7 +58,7 @@ public class Member extends BaseEntity {
     // Unique ID who Logged in with OAuth2
     private String providerId;
 
-    public Member(String name, String password, String contact, LocalDate dob, String address, String postCode, String profileImageUrl, OAuthProviderType provider, String providerId) {
+    public Member(String name, String password, String contact, String dob, String address, String postCode, String profileImageUrl, OAuthProviderType provider, String providerId) {
         this.name = name;
         this.password = password;
         this.contact = contact;
@@ -80,13 +80,9 @@ public class Member extends BaseEntity {
 
     public static Member from(SignUpRequest request, PasswordEncoder encoder) {
         return Member.builder()
-                .name(request.getName())
-                .password(encoder.encode(request.getPassword()))
+                .name(request.getFirstName() + request.getLastname())
                 .contact(request.getContact())
-                .address(request.getAddress())
-                .postCode(request.getPostCode())
                 .email(request.getEmail())
-                .bizType(request.getBizType())
                 .build();
     }
 }
